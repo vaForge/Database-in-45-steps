@@ -9,7 +9,7 @@ type KV struct {
 }
 
 func (kv *KV) Open() error {
-	kv.mem = map[string][]byte{} // empty
+	kv.mem = make(map[string][]byte) // empty
 	return nil
 }
 
