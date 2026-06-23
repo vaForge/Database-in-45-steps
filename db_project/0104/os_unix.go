@@ -9,6 +9,18 @@ import (
 )
 
 // open or create a file and fsync the directory
+
+/*
+On Linux, fsync ensures file data is written,
+but does not ensure the file itself exists.
+This is because a file is recorded by its parent directory.
+If a directory entry is added (file creation) but not written to disk before power loss, the file cannot be reached, even if its data is on disk.
+To fix this, call fsync on the directory.On Linux, fsync ensures file data is written,
+but does not ensure the file itself exists.
+This is because a file is recorded by its parent directory.
+If a directory entry is added (file creation) but not written to disk before power loss,
+the file cannot be reached, even if its data is on disk. To fix this, call fsync on the directory.
+*/
 func createFileSync(file string) (*os.File, error) {
 	fp, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE, 0o644)
 	if err != nil {
