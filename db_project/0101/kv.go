@@ -1,7 +1,5 @@
 package db0101
 
-import "errors"
-
 type KV struct {
 	mem map[string][]byte
 }
@@ -17,7 +15,7 @@ func (kv *KV) Get(key []byte) ([]byte, bool, error) {
 	skey := string(key)
 	val, ok := kv.mem[skey]
 	if !ok {
-		return nil, false, errors.New("Key doesn't exist")
+		return nil, false, nil
 	}
 	return val, ok, nil
 }
@@ -31,7 +29,7 @@ func (kv *KV) Set(key []byte, val []byte) (bool, error) {
 func (kv *KV) Del(key []byte) (bool, error) {
 	skey := string(key)
 	if _, ok := kv.mem[skey]; !ok {
-		return false, errors.New("Key doesn't exist")
+		return false, nil
 	}
 	delete(kv.mem, skey)
 	return true, nil
